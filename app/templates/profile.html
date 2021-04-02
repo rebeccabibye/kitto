@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+      .welcome {
+        padding: 8px;
+        background-color: greenyellow;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    {% for message in get_flashed_messages() %}
+      <div class="welcome">{{ message }}</div>
+    {% endfor %}
+    <section class="hero is-success is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            {{g.user.username}}'s Profile
+          </h1>
+          <h2 class="subtitle">
+            You are user number #{{g.user.id}}
+            <br>Your email is {{g.user.email}}
+          </h2>
+          <h2>The following are links:</h2>
+          <p><a href="/websites"><u>Websites</u> Page</a></p>
+          <p><a href="/domains"><u>Domains</u> Page</a></p>
+          <p><a href="/apps"><u>Apps</u> Page</a></p>
+          <p><a href="/block"><u>Blocking</u> Page</a></p>
+          <p><a href="/login"><u>Log out</u> </a></p>
+          <p>Your app will be emailed to you immediately, and may take a few hours to reach you.</p>
+          <p>WHEN RUNNING YOUR APP, <u>RUN AS ADMINISTRATOR!!!</u></p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{#only delete the ones with YOUR username - DON'T FORGET!!!#}
+
+{% set counting = True%}
+{% set ns = namespace(printusername=0) %}
+
+{% block content %}
+    <h1 style="color:white"><center><b style="font-family:verdana">Hello, {{ user.username }}!</b></center></h1>
+    <h2 style="color:white"><center><b style="font-family:verdana">The following are websites:</b></center></h2>
+    <body style="background-color:plum;">
+        {% for key, value in response.items() %}
+            {% for each in value %}
+                {%for x,y in each.items()%}
+                    {%if "username" in x %}
+                        {%if x != '0' or x!=0 %}
+                            {% set ns.printusername=y %}
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {%endfor%}
+        {%endfor%}
+        {% for key, value in response.items() %}
+            {% for each in value %}
+                {%for x,y in each.items()%}
+                    {%if ns.printusername==g.user.id%}
+                        {%if y is string %}
+                            {% if 'The following are websites' in y and counting==True %}
+                                {% set list1 = y.split('{') %}
+                                <ul>
+                                    {% for i in list1 %}
+                                        {% set i = i.replace("'","") %}
+                                        {% set i = i.replace("}","") %}
+                                        {% set i = i.replace("[","") %}
+                                        {% set i = i.replace("]","") %}
+                                        {% set i = i.replace("Website: ","") %}
+                                        {% set i = i.replace(", Time: ","; ") %}
+                                        {% set listurl = i.split('Url: ') %}
+                                        {% set correctending = (listurl[1] |string).replace(",","") %}
+                                        {% set tempurl = 'http://www.' + (correctending |string) %}
+                                        {% if i != ''%}
+                                            <li style="color:white"><p style="font-family:verdana">{{listurl[0]}} <a href={{tempurl}}>{{correctending}}</a></p></li>
+                                        {%endif%}
+                                    {%endfor%}
+                                    {%set counting = False %}
+                                </ul>
+                            {%endif%}
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {% endfor %}
+        {% endfor %}
+    </body>
+{%endblock%}

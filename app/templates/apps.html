@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% set counting = True%}
+{% set ns = namespace(printusername=0) %}
+
+{% block content %}
+    <head>
+        <link rel="shortcut icon" type="image/jpg" href="https://i.pinimg.com/originals/06/15/71/06157196656587bc901c6e8bf4848fe1.jpg"/>
+    </head>
+    <h1 style="color:white"><center><b style="font-family:verdana">Hello, {{ user.username }}!</b></center></h1>
+    <h2 style="color:white"><center><b style="font-family:verdana">The following are apps:</b></center></h2>
+    <body style="background-color:plum;">
+        {% for key, value in response.items() %}
+            {% for each in value %}
+                {%for x,y in each.items()%}
+                    {%if "username" in x %}
+                        {%if x != '0' or x!=0 %}
+                            {% set ns.printusername=y %}
+                        {%endif%}
+                    {%endif%}
+                    {%if ns.printusername==g.user.id%}
+                        {%if y is string %}
+                            {% if 'The following are apps' in y and counting==True %}
+                                {% set list1 = y.split('{') %}
+                                <ul>
+                                    {% for i in list1 %}
+                                        {% set i = i.replace("'","") %}
+                                        {% set i = i.replace("}","") %}
+                                        {% set i = i.replace("[","") %}
+                                        {% set i = i.replace("]","") %}
+                                        {% set i = i.replace("App: ","") %}
+                                        {% set i = i.replace(", Time: ","; ") %}
+                                        {% if i != ''%}
+                                            <li style="color:white"><p style="font-family:verdana">{{i}}</p></li>
+                                        {%endif%}
+                                    {%endfor%}
+                                    {%set counting = False%}
+                                </ul>
+                            {%endif%}
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {% endfor %}
+        {% endfor %}
+    </body>
+{%endblock%}
+
+{#but it still prints out two sometimes LOL#}

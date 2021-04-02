@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% set counting = True%}
+{% set ns = namespace(printusername=-1000000) %}
+
+{% block content %}
+  <h1 style="color:white"><center><b style="font-family:verdana">Hello, {{ user.username }}!</b></center></h1>
+  <h2 style="color:white"><center><b style="font-family:verdana">      Here's the page where you block websites/apps and control screen time!  </b></center></h2>
+
+  <body style="background-color:plum;">
+    <p style="font-family:Calibri"> <b style="color:white">You choose whether you want to block a website/app entirely or limit the ammount of 
+      time your child spends on it. If you want to block it entirely, click "24/7"...
+      if not, you'll just choose the time when you want to start blocking and end blocking
+      OR you can choose a separate option where it limits the ammount of time your child
+      spent there, regardless of when. 
+      Note: don't worry, enabling this feature, won't mess with the websites/apps/domains 
+      lists at all. </b></p>
+    <p style="color:white">We've already blocked innapropriate apps and websites. Below, you can specify which websites you want to block, and for what times/how long.</p>
+    <form method="post">
+      <p>
+        <label for="number">Start time, please enter a whole number between 0 and 23:</label>
+        <input type="number" id="starttime" name="starttime" />
+      </p>
+      <p>
+        <label for="number">End time, please enter a whole number greater than the start time:</label>
+        <input type="number" id="endtime" name="endtime" />
+      </p>
+      <p>
+        <label for="msg">Website domain url, complete with http://www. part:</label>
+        <input type="url" id="website" name="website" />
+      </p>>
+      <button type="submit" class="button is-success">
+        Enter
+      </button>
+      <p>Tip: click the "Block" button at the top of the page (nav bar) to see your changes.</p>
+      <p>If you want to remove a previous block, enter the exact same data as before and we will remove it.</p>
+    </form>
+    <h2>List blocked already:</h2>
+    {% for key, value in response2.items() %}
+      {% for each in value %}
+        {%for x,y in each.items()%}
+          {%if "username" in x %}
+            {%if x != '-1000000' or x!=-1000000 %}
+              {% set ns.printusername=y %}
+            {%endif%}
+          {%endif%}
+          {%if ns.printusername==g.user.id%}
+            {%if y is string %}
+              {% if 'website5858' in y and counting==True %}
+                {% set list1 = y.split('{') %}
+                {% for i in list1 %}
+                  {% set i = i.replace("website5858: ","") %}
+                  {% set list2 = i.split('*') %}
+                  <p style="font-family:verdana" style="color:white">{{(list2|first).replace("-",":00 - ")}}:00 &nbsp;&nbsp; {{list2|last}}</p>
+                {%endfor%}
+                {%set counting = False%}
+              {%endif%}
+            {%endif%}
+          {%endif%}
+        {%endfor%}
+      {% endfor %}
+    {% endfor %}  
+  </body>
+{%endblock%}

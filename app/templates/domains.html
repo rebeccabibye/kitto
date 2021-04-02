@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{#note: no new line is just don't put p, just type it out w/o formatting #}
+
+{% set counting = True%}
+{% set startinglist=[] %}
+{% set ns = namespace(printusername=0) %}
+
+{% block content %}
+    <h1 style="color:white"><center><b style="font-family:verdana">Hello, {{ user.username }}!</b></center></h1>
+    <h2 style="color:white"><center><b style="font-family:verdana">The following are sorted domains:</b></center></h2>
+    <body style="background-color:plum;">
+        <h2 style="color:white">Detailed:</h2>
+        {% for key, value in response.items() %}
+            {% for each in value %}
+                {%for x,y in each.items()%}
+                    {%if "username" in x %}
+                        {%if x != '0' or x!=0 %}
+                            {% set ns.printusername=y %}
+                        {%endif%}
+                    {%endif%}
+                    {%if ns.printusername==g.user.id%}
+                        {%if y is string %}
+                            {% if 'frozenset' in y and counting==True %}
+                                {%set counting = False%}
+                                {% set list1 = y.split('{') %}
+                                {% for i in list1 %}
+                                    {%set tempdomain=i.split('/',3)[2]%}
+                                    {%set specificpos=(tempdomain|string).split()%}
+                                    {{ startinglist.append(specificpos[2]) or "" }}
+                                    {%if (specificpos[2]|string) != '' and (specificpos[2]|string) != None%}
+                                        {% set templink='http://www.' + specificpos[2].replace("'","") %}
+                                        <p><b><a href="{{templink}}">{{templink}}</a>:</b></p>
+                                    {%endif%}
+                                    {%if i|string != ''%}
+                                        {%set tempprint = i.replace("frozenset(","").split('(') %}
+                                        {%for p in tempprint %}
+                                            <p style="color:white">{{p.replace("'","").replace("),","").replace(",","::")}}</p>
+                                        {%endfor%}
+                                    {%endif%}
+                                    {%set temptime=i.split(')})')[1]%}
+                                    {{ startinglist.append(temptime) }} 
+                                {%endfor%}
+                            {%endif%}
+                        {%endif%}
+                    {%endif%}
+                {%endfor%}
+            {% endfor %}
+        {% endfor %}
+        <h2 style="color:white">Ordered list of domains:</h2>
+        {%for i in range(0,(startinglist|length),2)%}
+            {%if (startinglist[i]|string) != ''%}
+                {%set templink='http://www.' + startinglist[i].replace("'","")%}
+                <p style="color:white">You spent {{startinglist[i+1].replace(", frozenset(","").replace("}","")}} seconds at <a href="{{templink}}">{{templink}}</a>. </p>
+            {%endif%}
+        {%endfor%}
+    </body>
+{%endblock%}
+
