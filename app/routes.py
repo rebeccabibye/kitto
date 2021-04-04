@@ -7,7 +7,6 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 from flask_socketio import SocketIO
 from app import app
 from app.forms import LoginForm
-from win32gui import GetWindowText, GetForegroundWindow
 import threading
 from datetime import datetime
 import uiautomation as auto
