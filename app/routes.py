@@ -9,7 +9,6 @@ from app import app
 from app.forms import LoginForm
 import threading
 from datetime import datetime
-import uiautomation as auto
 import socket
 import pickle
 import time
