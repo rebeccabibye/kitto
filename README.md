@@ -11,4 +11,5 @@ Task list:
 -get favicon to display on every webpage, not just the front one
 -domain link to bottom 
 -different time periods (sort by day, week, month, year, etc.); also convert to minutes not seconds
+-update front page
 -PACKAGE APP by figuring out a person's username!! maybe email?? 
