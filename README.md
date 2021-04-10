@@ -15,3 +15,4 @@ Task list:
 -also email or text notif whenever child goes on gaming/novel/youtube website?
 -reset password/change email feature
 -add screenshots? 
+-mobile version too!
