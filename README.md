@@ -16,3 +16,4 @@ Task list:
 -reset password/change email feature
 -add screenshots? 
 -mobile version too!
+-sending message feature not working
